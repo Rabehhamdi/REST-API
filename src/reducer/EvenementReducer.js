@@ -25,7 +25,7 @@ const EvenementReducer=(state=tab,action)=>{
         case "MODIFICATION":  
             return state.map((el,index)=>{
                 if(el.id === action.element.id){
-                    return action.el
+                    return action.element
                 }
                 return el
             })

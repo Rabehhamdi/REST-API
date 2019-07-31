@@ -23,13 +23,15 @@ class Modification extends Component {
             ...this.props.tab.filter((el, index) => el._id === this.props._id)[0]
         })
     }
-    edit = () => {
-        this.props.modification(this.state)
-    }
+   
     a = () => {
-        axios.put(`/Modification/${this.props._id}`, this.state ) 
+        axios.put(`/Modification/${this.props._id}`,{ nom:this.state.nom,
+            description: this.state.description,
+            img: this.state.img  } ) 
+        .then(()=>this.props.modification(this.state))
          
     }
+    
     render() {
         return (
             <div>
@@ -47,7 +49,7 @@ class Modification extends Component {
                         <input type="text" className="form-control" id="description" value={this.state.description} name="description" onChange={this.handleChange} placeholder="Enter Description" />
                     </div>
                     <Link to="/">
-                        <button type="submit" onClick={this.edit && this.a} className="btn btn-primary">Submit</button>
+                        <button type="submit" onClick={this.a} className="btn btn-primary">Submit</button>
                     </Link>
                 </form>
             </div>
@@ -62,10 +64,10 @@ const mapStateToPropos = (state) => {
 
 const mapdispatchToProps = dispatch => {
     return {
-        modification: (el) => {
+        modification: (element) => {
             dispatch({
                 type: 'MODIFICATION',
-                el
+                element
             })
         }
     }
